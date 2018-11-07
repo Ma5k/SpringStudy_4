@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 将org.springframework.web包下的类的日志级别设置为debug，我们开发SpringMVC经常出现和参数类型相关的4XX错误，设置此项我们会看到更详细的错误信息 -->
 <configuration scan="true" scanPeriod="1 seconds">
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
