@@ -4,8 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import com.wisely.highlight_springmvc4.interceptor.DemoInterceptor;
 
 /**
  * 此处无任何特别，只是普通的Spring配置类。这里我们配置了一个JSP的ViewResolver，用来映射路径和实际页面的位置，
@@ -23,9 +28,9 @@ import org.springframework.web.servlet.view.JstlView;
  *
  */
 @Configuration
-@EnableWebMvc
+@EnableWebMvc	//1、@EnableWebMvc开启SpringMvc支持，若无此句，重写WebMvcConfigurerAdapter方法无效
 @ComponentScan("com.wisely.highlight_springmvc4")
-public class MyMvcConfig {
+public class MyMvcConfig extends WebMvcConfigurerAdapter{	//继承WebMvcConfigurerAdapter类，重写期方法可以对SpringMvc进行配置
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -33,5 +38,20 @@ public class MyMvcConfig {
 		viewResolver.setSuffix(".jsp");
 		viewResolver.setViewClass(JstlView.class);
 		return viewResolver;
+	}
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");	//addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径
+	}
+	
+	@Bean	//配置拦截器的Bean
+	public DemoInterceptor demoInterceptor() {
+		return new DemoInterceptor();
+	}
+	
+	@Override	//重写addInterceptors方法，注册拦截器
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(demoInterceptor());
 	}
 }
