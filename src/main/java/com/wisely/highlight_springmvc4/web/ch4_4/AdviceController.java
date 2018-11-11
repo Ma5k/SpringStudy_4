@@ -1,7 +1,5 @@
 package com.wisely.highlight_springmvc4.web.ch4_4;
 
-import javax.enterprise.inject.Model;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;

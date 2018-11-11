@@ -1,7 +1,6 @@
 package com.wisely.highlight_springmvc4;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 1、利用@Controller注解声明这是一个控制器
